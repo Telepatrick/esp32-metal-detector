@@ -15,7 +15,7 @@
 #define SENSOR_PIN ADC_CHANNEL_3
 #define BUZZER_PIN GPIO_NUM_17
 
-#define PULSE_US 20
+#define PULSE_US 40
 #define SAMPLE_DELAY_US 2
 
 #define BASELINE_SAMPLES 100
@@ -152,8 +152,8 @@ void metal_detector_calibrate(void)
     long sum = 0;
 
     for (int i = 0; i < BASELINE_SAMPLES; i++) {
-        int adc = measure();
-
+        int adc = measure_best();
+        
         sum += adc;
 
         vTaskDelay(pdMS_TO_TICKS(5));
@@ -259,7 +259,7 @@ void metal_detector_init(void)
 
 void metal_detector_start(void)
 {
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(2000));
 
     metal_detector_calibrate();
 
